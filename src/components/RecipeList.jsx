@@ -2,7 +2,7 @@ import RecipeCard from "./RecipeCard";
 
 function RecipeList({ recipes }) {
     return (
-        <div>
+        <div className="recipe-list">
         {recipes.map((recipe) => (
             <RecipeCard
                 title={recipe.title}
