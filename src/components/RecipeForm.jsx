@@ -33,7 +33,7 @@ function RecipeForm({ onAdd, onUpdate, editingRecipe }) {
 }
 
      return (
-    <form onSubmit={handleSubmit}>
+    <form className="recipe-form" onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Titel" 

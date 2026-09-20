@@ -1,8 +1,27 @@
+.recipe-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 400px;
+  margin: 0 auto 24px;
+}
+
+.recipe-form input,
+.recipe-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  font: inherit;
+}
 
 .recipe-list{
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, 250px);
+  justify-content: center;
   gap: 16px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .recipe-card{
