@@ -48,11 +48,30 @@ function handleEditClick(id) {
   setEditingRecipe(recipes.find(r => r.id == id));
 }
 
+async function handleUpdateRecipe(updatedRecipe) {
+  try {
+    const response = await fetch(`http://localhost:5148/api/recipes/${updatedRecipe.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedRecipe),
+    });
+    if (!response.ok) {
+      throw new Error("Kunde inte uppdatera receptet");
+    }
+    const updated = await response.json();
+    setRecipes(recipes.map(r => r.id === updated.id ? updated : r));
+    setEditingRecipe(null);
+    setError(null);
+  } catch (err) {
+    setError(err.message);
+  }
+}
+
   return (
     <><h1>
       Receptbok
     </h1>
-    <RecipeForm onAdd={handleAddRecipe} editingRecipe={editingRecipe} />
+    <RecipeForm onAdd={handleAddRecipe} onUpdate={handleUpdateRecipe} editingRecipe={editingRecipe} />
     <RecipeList recipes={recipes} onEdit={handleEditClick} />
     <ErrorMessage message={error} />
     </>

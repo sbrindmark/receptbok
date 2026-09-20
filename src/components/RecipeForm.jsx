@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function RecipeForm({ onAdd, editingRecipe }) {
+function RecipeForm({ onAdd, onUpdate, editingRecipe }) {
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
@@ -20,8 +20,13 @@ function RecipeForm({ onAdd, editingRecipe }) {
         image: image,
         description: description,
     };
-    onAdd(newRecipe);
-    // rensa fälten:
+
+    if (editingRecipe) {
+      onUpdate({ ...newRecipe, id: editingRecipe.id});
+    } else {
+      onAdd(newRecipe);
+    }
+
     setTitle("");
     setImage("");
     setDescription("");
@@ -46,7 +51,7 @@ function RecipeForm({ onAdd, editingRecipe }) {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         />
-      <button type="submit">Lägg till</button>
+      <button type="submit">{editingRecipe ? "Spara" : "Lägg till"}</button>
     </form>
   );
 }
