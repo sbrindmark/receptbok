@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function RecipeForm({ onAdd }) {
+function RecipeForm({ onAdd, editingRecipe }) {
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
+
+    useEffect(() => {
+      if (editingRecipe) {
+        setTitle(editingRecipe.title);
+        setImage(editingRecipe.image);
+        setDescription(editingRecipe.description);
+      }
+    },[editingRecipe]);
 
     function handleSubmit(e) {
         e.preventDefault();

@@ -8,6 +8,7 @@ function App() {
 
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState(null);
+  const [editingRecipe, setEditingRecipe] = useState(null);
 
   useEffect(() => {
   async function loadRecipes() {
@@ -43,13 +44,17 @@ function App() {
   }
 }
 
+function handleEditClick(id) {
+  setEditingRecipe(recipes.find(r => r.id == id));
+}
+
   return (
     <><h1>
       Receptbok
     </h1>
+    <RecipeForm onAdd={handleAddRecipe} editingRecipe={editingRecipe} />
+    <RecipeList recipes={recipes} onEdit={handleEditClick} />
     <ErrorMessage message={error} />
-    <RecipeForm onAdd={handleAddRecipe} />
-    <RecipeList recipes={recipes} />
     </>
   );
 }
