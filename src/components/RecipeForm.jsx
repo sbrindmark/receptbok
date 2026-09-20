@@ -8,7 +8,6 @@ function RecipeForm({ onAdd }) {
     function handleSubmit(e) {
         e.preventDefault();
         const newRecipe = {
-        id: Date.now(),
         title: title,
         image: image,
         description: description,

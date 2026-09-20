@@ -16,8 +16,14 @@ function App() {
     loadRecipes();
   }, []);
 
-  function handleAddRecipe(newRecipe) {
-  setRecipes([...recipes, newRecipe]);
+  async function handleAddRecipe(newRecipe) {
+    const response = await fetch("http://localhost:5148/api/recipes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newRecipe),
+    });
+    const created = await response.json();
+    setRecipes([...recipes, created]);
 }
 
   return (
