@@ -19,7 +19,7 @@ function App() {
       const data = await response.json();
       setRecipes(data);
     } catch (err) {
-      setError(err.message);
+      setError("Något gick fel. Kontrollera att servern är igång.");
     }
   }
   loadRecipes();
