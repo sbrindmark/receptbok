@@ -1,6 +1,6 @@
-# Mitt projekt
+# Receptbok - Frontend
 
-En receptbok byggd i React där man kan skapa nya recept, ändra på dem och ta bort dem.
+En receptbok byggd i React där man kan skapa nya recept, ändrar och tar bort dem.
 
 ## Teknik
 - React (Vite)
@@ -10,7 +10,7 @@ En receptbok byggd i React där man kan skapa nya recept, ändra på dem och ta 
 
 ## Komma igång
 ```bash
-git clone git@github.com:sbrindmark/receptbok.git
+git clone https://github.com/sbrindmark/receptbok.git
 cd receptbok
 npm install
 npm run dev
