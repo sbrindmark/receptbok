@@ -86,7 +86,7 @@ async function handleUpdateRecipe(updatedRecipe) {
     <><h1>
       Receptbok
     </h1>
-    <RecipeForm onAdd={handleAddRecipe} onUpdate={handleUpdateRecipe} editingRecipe={editingRecipe} />
+    <RecipeForm onAdd={handleAddRecipe} onUpdate={handleUpdateRecipe} editingRecipe={editingRecipe} onError={setError} />
     <RecipeList recipes={recipes} onEdit={handleEditClick} onDelete={handleDeleteRecipe} />
     <ErrorMessage message={error} />
     </>
