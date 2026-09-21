@@ -1,6 +1,6 @@
 import RecipeCard from "./RecipeCard";
 
-function RecipeList({ recipes, onEdit }) {
+function RecipeList({ recipes, onEdit, onDelete }) {
     return (
         <div className="recipe-list">
         {recipes.map((recipe) => (
@@ -11,6 +11,7 @@ function RecipeList({ recipes, onEdit }) {
                 description={recipe.description}
                 image={recipe.image}
                 onEdit={onEdit}
+                onDelete={onDelete}
                 />
         ))}
         </div>

@@ -44,6 +44,21 @@ function App() {
   }
 }
 
+async function handleDeleteRecipe(id) {
+  try {
+    const response = await fetch(`http://localhost:5148/api/recipes/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error("Kunde inte ta bort receptet");
+    }
+    setRecipes(recipes.filter(r => r.id !== id));
+    setError(null);
+  } catch (err) {
+    setError(err.message);
+  }
+}
+
 function handleEditClick(id) {
   setEditingRecipe(recipes.find(r => r.id == id));
 }
@@ -72,7 +87,7 @@ async function handleUpdateRecipe(updatedRecipe) {
       Receptbok
     </h1>
     <RecipeForm onAdd={handleAddRecipe} onUpdate={handleUpdateRecipe} editingRecipe={editingRecipe} />
-    <RecipeList recipes={recipes} onEdit={handleEditClick} />
+    <RecipeList recipes={recipes} onEdit={handleEditClick} onDelete={handleDeleteRecipe} />
     <ErrorMessage message={error} />
     </>
   );
