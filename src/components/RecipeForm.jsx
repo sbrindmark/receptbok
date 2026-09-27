@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function RecipeForm({ onAdd, onUpdate, editingRecipe, onError }) {
+function RecipeForm({ onAdd, onUpdate, editingRecipe, onError, onCancel }) {
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
@@ -73,6 +73,7 @@ async function handleFileChange(e) {
         onChange={handleFileChange} 
         />
       <button type="submit">{editingRecipe ? "Spara" : "Lägg till"}</button>
+      <button type="button" onClick={onCancel}>Avbryt</button>
     </form>
   );
 }

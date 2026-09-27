@@ -9,6 +9,7 @@ function App() {
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState(null);
   const [editingRecipe, setEditingRecipe] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
   async function loadRecipes() {
@@ -38,10 +39,21 @@ function App() {
     }
     const created = await response.json();
     setRecipes([...recipes, created]);
+    setShowForm(false);
     setError(null);
   } catch (err) {
     setError(err.message);
   }
+}
+
+function openCreateForm() {
+  setEditingRecipe(null);
+  setShowForm(true);
+}
+
+function closeForm() {
+  setShowForm(false);
+  setEditingRecipe(null);
 }
 
 async function handleDeleteRecipe(id) {
@@ -82,13 +94,24 @@ async function handleUpdateRecipe(updatedRecipe) {
   }
 }
 
+  const formVisible = showForm || editingRecipe;
+
   return (
-    <><h1>
-      Receptbok
-    </h1>
-    <RecipeForm onAdd={handleAddRecipe} onUpdate={handleUpdateRecipe} editingRecipe={editingRecipe} onError={setError} />
-    <RecipeList recipes={recipes} onEdit={handleEditClick} onDelete={handleDeleteRecipe} />
-    <ErrorMessage message={error} />
+    <>
+      <h1 className="app-title">Receptbok</h1>
+      {formVisible ? (
+        <RecipeForm
+          onAdd={handleAddRecipe}
+          onUpdate={handleUpdateRecipe}
+          editingRecipe={editingRecipe}
+          onError={setError}
+          onCancel={closeForm}
+        />
+      ) : (
+        <button className="create-btn" onClick={openCreateForm}>Skapa nytt recept</button>
+      )}
+      <ErrorMessage message={error} />
+      <RecipeList recipes={recipes} onEdit={handleEditClick} onDelete={handleDeleteRecipe} />
     </>
   );
 }
