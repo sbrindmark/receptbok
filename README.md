@@ -10,8 +10,8 @@ En receptbok byggd i React där man kan skapa nya recept, ändrar och tar bort d
 
 ## Komma igång
 ```bash
-git clone https://github.com/sbrindmark/receptbok.git
-cd receptbok
+git clone https://github.com/sbrindmark/ReceptbokFrontend.git
+cd ReceptbokFrontend
 npm install
 npm run dev
 ```
