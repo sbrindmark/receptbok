@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { uploadImage } from "../lib/api";
 
 function RecipeForm({ onAdd, onUpdate, editingRecipe, onError, onCancel }) {
     const [title, setTitle] = useState("");
@@ -35,22 +36,11 @@ function RecipeForm({ onAdd, onUpdate, editingRecipe, onError, onCancel }) {
 async function handleFileChange(e) {
   const file = e.target.files[0];
   if (!file) return;
-
-  const formData = new FormData();
-  formData.append("file", file);
-
-  try { 
-  const response = await fetch("http://localhost:5148/api/recipes/upload", {
-    method: "POST",
-    body: formData,
-  });
-  if (!response.ok) {
-    throw new Error("Kunde inte ladda upp bilden");
-  }
-  const data = await response.json();
-  setImage(data.url);
+  try {
+    const url = await uploadImage(file);
+    setImage(url);
   } catch (err) {
-  onError("Kunde inte ladda upp bilden. Kontrollera att servern är igång.");
+    onError(err.message);
   }
 }
 

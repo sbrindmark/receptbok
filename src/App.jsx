@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import RecipeList from './components/RecipeList';
 import RecipeForm from './components/RecipeForm';
 import ErrorMessage from './components/ErrorMessage';
+import { getRecipes, createRecipe, updateRecipe, deleteRecipe } from './lib/api';
 
 function App() {
 
@@ -14,14 +15,9 @@ function App() {
   useEffect(() => {
   async function loadRecipes() {
     try {
-      const response = await fetch("http://localhost:5148/api/recipes");
-      if (!response.ok) {
-        throw new Error("Kunde inte hämta recept");
-      }
-      const data = await response.json();
-      setRecipes(data);
+      setRecipes(await getRecipes());
     } catch (err) {
-      setError("Något gick fel. Kontrollera att servern är igång.");
+      setError(err.message);
     }
   }
   loadRecipes();
@@ -29,15 +25,7 @@ function App() {
 
   async function handleAddRecipe(newRecipe) {
   try {
-    const response = await fetch("http://localhost:5148/api/recipes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newRecipe),
-    });
-    if (!response.ok) {
-      throw new Error("Kunde inte spara receptet");
-    }
-    const created = await response.json();
+    const created = await createRecipe(newRecipe);
     setRecipes([...recipes, created]);
     setShowForm(false);
     setError(null);
@@ -58,12 +46,7 @@ function closeForm() {
 
 async function handleDeleteRecipe(id) {
   try {
-    const response = await fetch(`http://localhost:5148/api/recipes/${id}`, {
-      method: "DELETE",
-    });
-    if (!response.ok) {
-      throw new Error("Kunde inte ta bort receptet");
-    }
+    await deleteRecipe(id);
     setRecipes(recipes.filter(r => r.id !== id));
     setError(null);
   } catch (err) {
@@ -77,15 +60,7 @@ function handleEditClick(id) {
 
 async function handleUpdateRecipe(updatedRecipe) {
   try {
-    const response = await fetch(`http://localhost:5148/api/recipes/${updatedRecipe.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedRecipe),
-    });
-    if (!response.ok) {
-      throw new Error("Kunde inte uppdatera receptet");
-    }
-    const updated = await response.json();
+    const updated = await updateRecipe(updatedRecipe.id, updatedRecipe);
     setRecipes(recipes.map(r => r.id === updated.id ? updated : r));
     setEditingRecipe(null);
     setError(null);
